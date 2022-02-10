@@ -3,7 +3,7 @@
     "version": "0.2.0",
     "description": "Library to validate values & objects attributes",
     "main": "index.d.ts",
-    "private": true,
+    "private": false,
     "files": [
         "build/**/*"
     ],
