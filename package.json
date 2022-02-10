@@ -1,6 +1,6 @@
 {
     "name": "shecker",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Library to validate values & objects attributes",
     "main": "index.d.ts",
     "private": false,
