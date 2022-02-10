@@ -76,3 +76,38 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toStrictEqual([]);
     });
 });
+
+describe('Check validations for nested objects', () => {
+    it('Should return one error because property name.first does not exist', () => {
+        const object = {
+            id: 1,
+            name: 'Gustavo Mora',
+            roles: ['user', 'admin']
+        }
+        const rules = { 'name.first': 'string|min:5' }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return one error because property name.last does not exist', () => {
+        const object = {
+            id: 1,
+            name: { first: 'Gustavo' },
+            roles: ['user', 'admin']
+        }
+        const rules = { id: 'number', 'name.first': 'string|min:3', 'name.last': 'required' }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return no errors', () => {
+        const object = {
+            id: 1,
+            name: { first: 'Gustavo', last: 'Mora' },
+            roles: ['user', 'admin']
+        }
+        const rules = { id: 'number', 'name.first': 'string|min:3', 'name.last': 'required|string|min:3' }
+
+        expect(validateObject(object, rules)).toStrictEqual([]);
+    });
+});
