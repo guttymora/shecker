@@ -1,7 +1,9 @@
 # Shecker
 
-Library to validate single values, simple objects & complex objects according a set of defined rules.
+Library for Typesscript and Javascript to validate single values, simple objects & complex objects according a set of defined rules.
 It's highly inspired by Laravel framework Validations: https://laravel.com/docs/9.x/validation
+
+> :warning: This library is **not intended** to validate emails, phone numbers or addresses formats.
 
 ## Installation
 ```
@@ -25,7 +27,7 @@ if(errors.length > 0) { // Check if exists errors
      */
 }
 ```
-As you can see, each rule attached to a value is separated by pipes (`|`)
+As you can see above, each rule attached to a value is separated by pipes (`|`)
 
 You can also validate simple objects like:
 ```js
@@ -78,4 +80,35 @@ const rules = {
 
 // No errors
 console.log(errors); // []
+```
+
+## API
+### Methods
+Name | Description
+-----|------------
+`validate` | Allows check a single value with a set of rules
+`validateObject` | Allows check each attribute of an object and nested attributes with a set of rules
+
+### Rules
+Name | Description
+-----|------------
+`required` | Specifies the value needs to exist
+`string` | The value has to be a String
+`number` | The value has to be a Number
+`array` | The value has to be an Array
+`object` | the value has to be an Object
+`min:{n}`| For strings or arrays: The minimum length has to be `n`. For numbers, the value has to be equal or greater than `n`
+`max:{n}` | For strings or arrays: The maximum length has to be `n`. For numbers, the value has to be equal or lower than `n`
+`size:{n}` | Apply just for strings and arrays. The length has to be the same as `n`
+`equals:{n}` | Apply just for numbers. The value has to be the same as `n`
+
+Example:
+```js
+validate('Hello world!', 'required|string|min:3,max:15');
+/** 
+ * required: Verify the value is not empty, null or undefined
+ * string: The value has to be a string
+ * min:3:  The value needs to have at least of 3 chars
+ * max:15 the value needs to have maximum 15 chars
+ */
 ```
