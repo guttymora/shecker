@@ -1,6 +1,6 @@
 # Shecker
 
-Library to validate single values, simple objects & complex objects according a set of defined rules.
+Library for Typesscript and Javascript to validate single values, simple objects & complex objects according a set of defined rules.
 It's highly inspired by Laravel framework Validations: https://laravel.com/docs/9.x/validation
 
 > :warning: This library is **not intended** to validate emails, phone numbers or addresses formats.
