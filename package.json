@@ -1,5 +1,5 @@
 {
-    "name": "validator-lib",
+    "name": "shecker",
     "version": "0.1.0",
     "description": "",
     "main": "index.d.ts",

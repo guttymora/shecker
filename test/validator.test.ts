@@ -65,7 +65,7 @@ describe('Check validations for simple objects', () => {
         expect(validate(object, rules)).toHaveLength(1);
     });
 
-    it('Should return empty array because there is no errors', () => {
+    it('Should return empty array because object has no errors', () => {
         const object = {
             id: 1,
             name: 'Gustavo Mora',

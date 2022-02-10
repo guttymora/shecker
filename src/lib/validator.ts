@@ -24,7 +24,7 @@ const validate = (data: any, validation: IValidationObject): IError[] => {
 
             let validationPassed = false;
             let ruleExists = false;
-            
+
             for (const [ruleRegex, testValue] of validations.entries()) {
                 ruleExists = (ruleRegex as RegExp).test(rule);
 
