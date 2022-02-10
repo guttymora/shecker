@@ -11,6 +11,9 @@
         "build": "tsc",
         "test": "jest --config jestconfig.json"
     },
+    "repository": {
+        "url": "https://github.com/guttymora/shecker"
+    },
     "keywords": [
         "validator",
         "validations",
