@@ -1,22 +1,14 @@
+import {IValidationObject, IError} from './types';
 import { validations } from './validations';
 
-interface IValidationObject {
-    [key: string]: string;
-}
-
-interface IError {
-    [key: string]: string;
-}
-
-const validate = (data: any, validation: IValidationObject): IError[] => {
-    const errors = [];
+const validateObject = (data: any, validation: IValidationObject): IError[] => {
+    const errors: IError[] = [];
 
     // Iterate each key of validation object
     for (const key in validation) {
         const ruleObject = validation[key]; // Get rule for each attribute
-        const multipleRules = ruleObject.split('|');
 
-        for (const rule of multipleRules) {
+        for (const rule of ruleObject.split('|')) {
             if (!rule || rule.length === 0) {
                 errors.push({ [key]: 'Invalid rule format. Found an empty rule' });
                 continue;
@@ -58,5 +50,5 @@ const validate = (data: any, validation: IValidationObject): IError[] => {
 }
 
 export {
-    validate
+    validateObject
 }

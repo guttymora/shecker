@@ -1,5 +1,7 @@
-import {validate} from './lib/validator';
+import { validate } from './lib/basic.validator';
+import {validateObject} from './lib/object.validator';
 
 export {
-    validate
+    validate,
+    validateObject
 }
