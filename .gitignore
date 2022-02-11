@@ -1,4 +1,12 @@
+# Dependencies
 node_modules
+
+# Generated files
 /build
+
+# IDEs
 .vscode
 .idea
+
+# Optional npm cache directory
+.npm
