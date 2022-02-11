@@ -16,6 +16,12 @@ const checkIsNumber = (value: any): string | null => {
     return null;
 }
 
+const checkIsBoolean = (value: any): string | null => {
+    if (value === 1 || value === 0 || value === true || value === false) return null;
+
+    return 'Invalid type. Required: boolean';
+}
+
 const checkIsArray = (value: any): string | null => {
     if (!(value instanceof Array)) {
         return 'Invalid type. Required: array';
@@ -165,6 +171,7 @@ const getNumberLimit = (rule: string): number | null => {
 const validations = new Map<any, (value: any, rule?: string) => string | null>();
 validations.set(/^string$/, (value) => checkisString(value));
 validations.set(/^number$/, (value) => checkIsNumber(value));
+validations.set(/^boolean$/, (value) => checkIsBoolean(value));
 validations.set(/^array$/, (value) => checkIsArray(value));
 validations.set(/^object$/, (value) => checkIsObject(value));
 validations.set(/^date$/, (value) => checkIsDateInstance(value));

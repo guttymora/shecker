@@ -98,6 +98,7 @@ Name | Description
 `required` | Specifies the value needs to exist
 `string` | The value has to be a String
 `number` | The value has to be a Number
+`boolean` | The value has to be: `1`, `0`, `true` or `false`
 `array` | The value has to be an Array
 `object` | the value has to be an Object
 `min:{n}`| For strings or arrays: The minimum length has to be `n`. For numbers, the value has to be equal or greater than `n`

@@ -144,6 +144,42 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toHaveLength(1);
     });
 
+    it('Should return one error because attribute hasChildren is not a boolean', () => {
+        const object = {
+            name: 'Alex',
+            hasChildren: 'yes',
+            birthDate: '80/2001/01'
+        }
+
+        const rules = { name: 'string', hasChildren: 'boolean' };
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return one error because attribute hasChildren is not a boolean', () => {
+        const object = {
+            name: 'Alex',
+            hasChildren: 2,
+            birthDate: '80/2001/01'
+        }
+
+        const rules = { name: 'string', hasChildren: 'boolean' };
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return one error because attribute hasChildren is not a boolean', () => {
+        const object = {
+            name: 'Alex',
+            hasChildren: [8],
+            birthDate: '80/2001/01'
+        }
+
+        const rules = { name: 'string', hasChildren: 'boolean' };
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
     it('Should return empty array because there is no errors', () => {
         const object = {
             id: 1,
