@@ -8,6 +8,20 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toHaveLength(1);
     });
 
+    it('Should return one error because rule is empty', () => {
+        const object = {}
+        const rules = { id: '' }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return one error because rule is malformed', () => {
+        const object = {}
+        const rules = { id: {} as string }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
     it('Should return one error because "id" attribute type is wrong', () => {
         const object = { id: '1' }
         const rules = { id: 'required|number' }
@@ -49,7 +63,7 @@ describe('Check validations for simple objects', () => {
             name: 'Gustavo Mora',
             roles: ['user', 'admin']
         }
-        const rules = { id: 'number', name: 'required|string|min:5', roles: 'required|array|min:3|max:4' }
+        const rules = { id: 'number', name: 'string|min:5', roles: 'required|array|min:3|max:4' }
 
         expect(validateObject(object, rules)).toHaveLength(1);
     });
@@ -60,18 +74,49 @@ describe('Check validations for simple objects', () => {
             name: 'Gustavo Mora',
             roles: ['user', 'admin']
         }
-        const rules = { id: 'number', name: 'required|string|min:5', roles: 'required|array|max:1' }
+        const rules = { id: 'number', name: 'string|min:5|required', roles: 'required|array|max:1' }
 
         expect(validateObject(object, rules)).toHaveLength(1);
     });
 
-    it('Should return empty array because object has no errors', () => {
+    it('Should return one error because rule is malformed', () => {
+        const object = {
+            id: 1,
+            name: 'Gustavo Mora',
+            roles: ['user', 'admin']
+        }
+        const rules = { id: 'number', name: '|string|min:5|required' }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return one error because rules: required & ifExists are defined for the same attribute', () => {
+        const object = {
+            id: 1,
+            roles: ['user', 'admin']
+        }
+        const rules = { id: 'number', name: 'string|min:5|required|ifExists', roles: 'array|min:1|max:4' }
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
+    it('Should return empty array because there is no errors', () => {
         const object = {
             id: 1,
             name: 'Gustavo Mora',
             roles: ['user', 'admin']
         }
         const rules = { id: 'number', name: 'string|min:5', roles: 'array|min:1|max:4' }
+
+        expect(validateObject(object, rules)).toStrictEqual([]);
+    });
+
+    it('Should return empty array because attribute `name` is optional (ifExists)', () => {
+        const object = {
+            id: 1,
+            roles: ['user', 'admin']
+        }
+        const rules = { id: 'number', name: 'string|min:5|ifExists', roles: 'array|min:1|max:4' }
 
         expect(validateObject(object, rules)).toStrictEqual([]);
     });
@@ -100,7 +145,7 @@ describe('Check validations for nested objects', () => {
         expect(validateObject(object, rules)).toHaveLength(1);
     });
 
-    it('Should return no errors', () => {
+    it('Should return an empty array because there is no errors', () => {
         const object = {
             id: 1,
             name: { first: 'Gustavo', last: 'Mora' },

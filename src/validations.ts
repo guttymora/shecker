@@ -1,65 +1,103 @@
-const checkRequire = (value: any): boolean => {
-    if (value) return true;
+const checkisString = (value: any): string | null => {
+    if (!(typeof value === 'string')) {
+        return 'Invalid type. Required: string';
+    }
 
-    return false;
+    return null;
 }
 
-const checkisString = (value: any): boolean => {
-    return typeof value === 'string';
+const checkIsNumber = (value: any): string | null => {
+    if (!(typeof value === 'number')) {
+        return 'Invalid type. Required: number';
+    }
+
+    return null;
 }
 
-const checkIsNumber = (value: any): boolean => {
-    return typeof value === 'number';
+const checkIsArray = (value: any): string | null => {
+    if (!(value instanceof Array)) {
+        return 'Invalid type. Required: array';
+    }
+
+    return null;
 }
 
-const checkIsArray = (value: any): boolean => {
-    return value instanceof Array;
+const checkIsObject = (value: any): string | null => {
+    if (!(value instanceof Object)) {
+        return 'Invalid type. Required: object';
+    }
+
+    return null;
 }
 
-const checkIsObject = (value: any): boolean => {
-    return value instanceof Object;
-}
-
-const checkMin = (value: string | number | any[], rule: string) => {
+const checkMin = (value: string | number | any[], rule: string): string | null => {
     const min = getNumberLimit(rule);
-    if (!min) return false;
+    if (!min) return `Invalid limit -> ${rule}`;
 
     if (typeof value === 'number') {
-        return value >= min;
+        if (value >= min) return null;
+
+        return `Invalid size -> ${rule}}`;
     }
 
-    return value.length >= min;
+    if (typeof value === 'string' || value instanceof Array) {
+        if (value.length >= min) return null;
+
+        return `Invalid size -> ${rule}}`;
+    }
+
+    return 'Invalid value type';
 }
 
-const checkMax = (value: string | number | any[], rule: string) => {
+const checkMax = (value: string | number | any[], rule: string): string | null => {
     const max = getNumberLimit(rule);
-    if (!max) return false;
+    if (!max) return `Invalid limit -> ${rule}`;
 
     if (typeof value === 'number') {
-        return value <= max;
+        if (value <= max) return null;
+
+        return `Invalid size -> ${rule}`;
     }
 
-    return value.length <= max;
+    if (typeof value === 'string' || value instanceof Array) {
+        if (value.length <= max) return null;
+
+        return `Invalid size -> ${rule}`;
+    }
+
+    return 'Invalid value type';
 }
 
-const checkSize = (value: string | any[], rule: string) => {
+const checkSize = (value: string | any[], rule: string): string | null => {
     const size = getNumberLimit(rule);
-    if (!size) return false;
+    if (!size)`Invalid size -> ${rule}`;
 
-    return value.length === size;
+    if (typeof value === 'string' || value instanceof Array) {
+        if (value.length === size) return null;
+
+        return `Invalid size -> ${rule}`;
+    }
+
+    return 'Invalid value type';
 }
 
-const checkEquals = (value: number, rule: string) => {
+const checkEquals = (value: number, rule: string): string | null => {
     const limit = getNumberLimit(rule);
-    if (!limit) return false;
+    if (!limit)`Invalid size -> ${rule}`;
 
-    return value === limit;
+    if (typeof value === 'number') {
+        if (value === limit) return null;
+
+        return `Invalid size -> ${rule}`;
+    }
+
+    return 'Invalid value type';
 }
 
 const getNumberLimit = (rule: string): number | null => {
-    const limit = rule.split(':')[1];
+    const limit = parseInt(rule.split(':')[1]);
 
-    if (limit) return Number(limit);
+    if (!isNaN(limit)) return Number(limit);
 
     return null;
 }
@@ -68,8 +106,7 @@ const getNumberLimit = (rule: string): number | null => {
  * All validatios expressed in a map where key is a regular expression
  * to check if the rule exists and, in that case, return a result of testing the incoming value
  */
-const validations = new Map<any, (value: any, rule?: string) => boolean>();
-validations.set(/required/, (value) => checkRequire(value));
+const validations = new Map<any, (value: any, rule?: string) => string | null>();
 validations.set(/string/, (value) => checkisString(value));
 validations.set(/number/, (value) => checkIsNumber(value));
 validations.set(/array/, (value) => checkIsArray(value));

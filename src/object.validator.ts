@@ -1,5 +1,6 @@
 import { IValidationObject, IError } from './types';
 import { validations } from './validations';
+import {EXISTENCE_RULES, checkIsRequired, checkIsOptional, checkIfContainsExistenceConflict} from './existence';
 
 const isValidNested = (key: string): IError[] => {
     const list = key.split('.');
@@ -44,13 +45,40 @@ const testNestedAttribute = (object: any, nestedKey: string, rules: string): IEr
 const testRule = (key: string, value: any, rules: string): IError[] => {
     let errors: IError[] = [];
 
-    if (!value) {
-        errors.push({ [key]: 'Invalid key to be validated' });
+    let setOfRules = rules.toString().split('|');
+
+    // Cannot exist 'required' & 'ifExists' rules for the same value
+    if (checkIfContainsExistenceConflict(setOfRules)) {
+        errors.push({ [key]: 'Existence conflict: required & ifExists rules' });
         return errors;
     }
 
-    for (const rule of rules.split('|')) {
-        if (!rule || rule.length === 0) {
+    // If value not exists, omits the others validations
+    if (checkIsOptional(value, setOfRules)) {
+        return errors;
+    }
+
+    // If value is required send error and omit the others validations
+    if (!checkIsRequired(value, setOfRules)) {
+        errors.push({ [key]: 'Key does not exist' });
+        return errors;
+    }
+
+    if (!value) {
+        errors.push({ [key]: 'Attribute does not exist' });
+        return errors;
+    }
+
+    // Remove rules: required & ifExists
+    setOfRules = setOfRules.filter(rule => rule !== EXISTENCE_RULES.IF_EXISTS && rule !== EXISTENCE_RULES.REQUIRED);
+
+    // If there is no more rules, skip
+    if (setOfRules.length === 0) {
+        return errors;
+    }
+
+    for (const rule of setOfRules) {
+        if (!rule || rule.length === 0 || typeof rule !== 'string') {
             errors.push({ [key]: 'Invalid rule format. Found an empty rule' });
             continue;
         }
@@ -63,8 +91,9 @@ const testRule = (key: string, value: any, rules: string): IError[] => {
                 ruleExists = true;
             }
 
-            if (!testValue(value, rule)) {
-                errors.push({ [key]: `Did not passed rule: ${rule}` });
+            const testResult = testValue(value, rule);
+            if (testResult) {
+                errors.push({ [key]: testResult });
             }
 
             break; // If rule exists and passed successfully, go to the next rule
@@ -83,11 +112,6 @@ const validateObject = (data: any, validation: IValidationObject): IError[] => {
 
     // Iterate each key of validation object
     for (const key in validation) {
-        if (!key) {
-            errors.push({ [key]: 'Invalid key to be validated' });
-            return errors;
-        }
-
         const rules = validation[key];
 
         if (key.indexOf('.') !== -1) {
