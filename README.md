@@ -17,7 +17,7 @@ $ npm install shecker
 Shecker allows you to validate if a value meets your requirements based on a set of rules you defined:
 ```js
 // validate() function returns an array of error objects
-const {validateObject} = require('shecker');
+const {validate} = require('shecker');
 
 const errors = validate('hello world', 'string|max:10');
 
@@ -80,6 +80,8 @@ const rules = {
     'engine.fuel.type': 'string',
     'engine.fuel.consumption': 'number',
 }
+
+const errors = validateObject(vehicle, rules);
 
 // No errors
 console.log(errors); // []
