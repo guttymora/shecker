@@ -37,6 +37,54 @@ describe('Check validations for single values', () => {
         expect(errors).toHaveLength(1);
     });
 
+    it('Should return one error because value (string) is not a date type', () => {
+        const errors = validate('date', 'date');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because value (number) is not a date type', () => {
+        const errors = validate(12345, 'date');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because value (array) is not a date type', () => {
+        const errors = validate([], 'date');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because date rule is invalid', () => {
+        const errors = validate('02-02-2022', 'onlydate:mm-mm-yyyy');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because date is invalid: invalid month', () => {
+        const errors = validate('13-02-1992', 'onlydate:mm-dd-yyyy');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because date is invalid: invalid day of month', () => {
+        const errors = validate('02-45-2001', 'onlydate:mm-dd-yyyy');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because date is invalid: invalid year', () => {
+        const errors = validate('02-45-1', 'onlydate:mm-dd-yyyy');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because date is invalid: invalid day of month', () => {
+        const errors = validate('02-45-2010', 'onlydate:mm-dd-yyyy');
+
+        expect(errors).toHaveLength(1);
+    });
+
     it('Should return no error because array value meets all the requirements', () => {
         const errors = validate([1, 2, 3, 4], 'array|min:1|max:4');
 
@@ -45,6 +93,18 @@ describe('Check validations for single values', () => {
 
     it('Should return empty array because value is optional (ifExists)', () => {
         const errors = validate('', 'ifExists|number');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no errors: valid date object', () => {
+        const errors = validate(new Date(), 'date');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no errors: valid date string', () => {
+        const errors = validate('24-12-2001', 'onlydate:dd-mm-yyyy');
 
         expect(errors).toStrictEqual([]);
     });
