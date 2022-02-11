@@ -99,12 +99,19 @@ Name | Description
 `string` | The value has to be a String
 `number` | The value has to be a Number
 `boolean` | The value has to be: `1`, `0`, `true` or `false`
+`date` | The value has to be an instance of Date
+`onlydate:{format}` | The value has to be a string and has the right format and be a valid date.
 `array` | The value has to be an Array
 `object` | the value has to be an Object
 `min:{n}`| For strings or arrays: The minimum length has to be `n`. For numbers, the value has to be equal or greater than `n`
 `max:{n}` | For strings or arrays: The maximum length has to be `n`. For numbers, the value has to be equal or lower than `n`
 `size:{n}` | Apply just for strings and arrays. The length has to be the same as `n`
 `equals:{n}` | Apply just for numbers. The value has to be the same as `n`
+
+> Quick note: The possible *formats* for the rule `onlydate` are: 
+>- `mm-dd-yyyy` or `mm/dd/yyyy`
+>- `dd-mm-yyyy` or `dd/mm/yyyy`
+>- `yyyy-mm-dd` or `yyyy/mm/dd`
 
 Example:
 ```js
