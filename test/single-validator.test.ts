@@ -85,6 +85,30 @@ describe('Check validations for single values', () => {
         expect(errors).toHaveLength(1);
     });
 
+    it('Should return one error because value is not a boolean', () => {
+        const errors = validate('2', 'boolean');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because value is not a boolean', () => {
+        const errors = validate(45, 'boolean');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because value is not a boolean', () => {
+        const errors = validate([33, 1], 'boolean');
+
+        expect(errors).toHaveLength(1);
+    });
+
+    it('Should return one error because value is not a boolean', () => {
+        const errors = validate({}, 'boolean');
+
+        expect(errors).toHaveLength(1);
+    });
+
     it('Should return no error because array value meets all the requirements', () => {
         const errors = validate([1, 2, 3, 4], 'array|min:1|max:4');
 
@@ -105,6 +129,18 @@ describe('Check validations for single values', () => {
 
     it('Should return no errors: valid date string', () => {
         const errors = validate('24-12-2001', 'onlydate:dd-mm-yyyy');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no errors: valid boolean', () => {
+        const errors = validate(true, 'boolean');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no errors: valid boolean', () => {
+        const errors = validate(101 === 101, 'boolean');
 
         expect(errors).toStrictEqual([]);
     });
