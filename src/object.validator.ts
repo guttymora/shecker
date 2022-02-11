@@ -36,9 +36,6 @@ const testNestedAttribute = (object: any, nestedKey: string, rules: string): IEr
         nestedValue = nestedValue[key];
     }
 
-    console.log('testing rule for nested key:', nestedKey);
-    console.log('with value:', nestedValue);
-
     errors = errors.concat(testRule(nestedKey, nestedValue, rules));
 
     return errors;
