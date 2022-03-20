@@ -180,6 +180,18 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toHaveLength(1);
     });
 
+    it('Should return one error because email is invalid', () => {
+        const object = {
+            name: 'Alex',
+            email: 'alex@sanz',
+            birthDate: '80/2001/01'
+        }
+
+        const rules = { name: 'string', hasChildren: 'boolean' };
+
+        expect(validateObject(object, rules)).toHaveLength(1);
+    });
+
     it('Should return empty array because there is no errors', () => {
         const object = {
             id: 1,
@@ -204,6 +216,18 @@ describe('Check validations for simple objects', () => {
     it('Should return no errors', () => {
         const object = {
             name: 'Alex',
+            birthDate: '12/01/1990'
+        }
+
+        const rules = { name: 'string|required|min:3', birthDate: 'onlydate:mm/dd/yyyy' };
+
+        expect(validateObject(object, rules)).toStrictEqual([]);
+    });
+
+    it('Should return no errors', () => {
+        const object = {
+            name: 'Alex',
+            email: 'alex@sanz.com',
             birthDate: '12/01/1990'
         }
 

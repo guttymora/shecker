@@ -1,8 +1,16 @@
-import { DATE_REGEXES, DATE_VALID_FORMATS } from './constants';
+import { DATE_REGEXES, DATE_VALID_FORMATS, EMAIL_REGEX } from './constants';
 
 const checkisString = (value: any): string | null => {
     if (!(typeof value === 'string')) {
         return 'Invalid type. Required: string';
+    }
+
+    return null;
+}
+
+const checkEmail = (value: string): string | null => {
+    if (!EMAIL_REGEX.test(value)) {
+        return 'Invalid email format';
     }
 
     return null;
@@ -170,6 +178,7 @@ const getNumberLimit = (rule: string): number | null => {
  */
 const validations = new Map<any, (value: any, rule?: string) => string | null>();
 validations.set(/^string$/, (value) => checkisString(value));
+validations.set(/^email$/, (value) => checkEmail(value));
 validations.set(/^number$/, (value) => checkIsNumber(value));
 validations.set(/^boolean$/, (value) => checkIsBoolean(value));
 validations.set(/^array$/, (value) => checkIsArray(value));
