@@ -1,6 +1,6 @@
 import { IValidationObject, IError } from './types';
 import { validations } from './validations';
-import {EXISTENCE_RULES, checkIsRequired, checkIsOptional, checkIfContainsExistenceConflict} from './existence';
+import { PRESENCE_RULES, checkIsRequired, checkIsOptional, checkIfContainsExistenceConflict } from './presence';
 
 const isValidNested = (key: string): IError[] => {
     const list = key.split('.');
@@ -70,7 +70,7 @@ const testRule = (key: string, value: any, rules: string): IError[] => {
     }
 
     // Remove rules: required & ifExists
-    setOfRules = setOfRules.filter(rule => rule !== EXISTENCE_RULES.IF_EXISTS && rule !== EXISTENCE_RULES.REQUIRED);
+    setOfRules = setOfRules.filter(rule => rule !== PRESENCE_RULES.IF_EXISTS && rule !== PRESENCE_RULES.REQUIRED);
 
     // If there is no more rules, skip
     if (setOfRules.length === 0) {
