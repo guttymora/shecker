@@ -1,6 +1,6 @@
 {
     "name": "shecker",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "description": "Library to validate single values & objects attributes",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
