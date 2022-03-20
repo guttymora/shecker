@@ -18,7 +18,10 @@ const DATE_VALID_FORMATS = {
     YYYY__MM__DD: 'yyyy/mm/dd',
 };
 
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 export {
     DATE_REGEXES,
-    DATE_VALID_FORMATS
+    DATE_VALID_FORMATS,
+    EMAIL_REGEX
 }

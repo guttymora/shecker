@@ -109,6 +109,12 @@ describe('Check validations for single values', () => {
         expect(errors).toHaveLength(1);
     });
 
+    it('Should return one error because is an invalid email', () => {
+        const errors = validate('', 'required|email');
+
+        expect(errors).toHaveLength(1);
+    });
+
     it('Should return no error because array value meets all the requirements', () => {
         const errors = validate([1, 2, 3, 4], 'array|min:1|max:4');
 
@@ -141,6 +147,12 @@ describe('Check validations for single values', () => {
 
     it('Should return no errors: valid boolean', () => {
         const errors = validate(101 === 101, 'boolean');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no error because is a valid email format', () => {
+        const errors = validate('hello@world.com', 'required|email');
 
         expect(errors).toStrictEqual([]);
     });
