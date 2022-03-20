@@ -39,11 +39,13 @@ const {validateObject} = require('shecker');
 
 const person = {
     name: 'Alex Black',
+    email: 'alex@black.com',
     age: 'twentyFour',
     hasChildren: 'no'
 }
 const rules = {
     name: 'required',
+    email: 'ifExists|email',
     age: 'required|number',
     hasChildren: 'required|boolean'
 }
@@ -99,6 +101,7 @@ Name | Description
 -----|------------
 `required` | Specifies the value needs to exist
 `string` | The value has to be a String
+`email` | The value has to be a valid email format
 `number` | The value has to be a Number
 `boolean` | The value has to be: `1`, `0`, `true` or `false`
 `date` | The value has to be an instance of Date
