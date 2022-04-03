@@ -1,6 +1,6 @@
 import { IError } from './types';
 import { validations } from './validations';
-import {EXISTENCE_RULES, checkIsRequired, checkIsOptional, checkIfContainsExistenceConflict} from './existence';
+import { PRESENCE_RULES, checkIsRequired, checkIsOptional, checkIfContainsExistenceConflict } from './presence';
 
 const validate = (value: any, rules: string): IError[] => {
     const errors: IError[] = [];
@@ -25,7 +25,7 @@ const validate = (value: any, rules: string): IError[] => {
     }
 
     // Remove rules: required & ifExists
-    setOfRules = setOfRules.filter(rule => rule !== EXISTENCE_RULES.IF_EXISTS && rule !== EXISTENCE_RULES.REQUIRED);
+    setOfRules = setOfRules.filter(rule => rule !== PRESENCE_RULES.IF_EXISTS && rule !== PRESENCE_RULES.REQUIRED);
 
     for (const rule of setOfRules) {
         for (const [ruleRegex, testValue] of validations.entries()) {
