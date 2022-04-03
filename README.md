@@ -6,7 +6,7 @@ Library for Typesscript and Javascript to validate single values, simple objects
 It's highly inspired by Laravel framework Validations: https://laravel.com/docs/9.x/validation
 > :warning: This library is still in experimental stage. Be careful while using it.
 
-> :warning: This library is **not intended** to validate emails, phone numbers or addresses formats.
+> :warning: This library is **not intended** to validate phone numbers or addresses formats.
 
 ## Installation
 ```
