@@ -8,15 +8,11 @@ const checkIsRequired = (value: any, rules: string[]): boolean => {
 
     if (rules.includes(PRESENCE_RULES.REQUIRED) && typeof value === 'string' && value.trim() === '') return false;
 
-    return rules.includes(PRESENCE_RULES.REQUIRED) && value !== null && value !== undefined;
+    return rules.includes(PRESENCE_RULES.REQUIRED) && value !== undefined && value !== null;
 }
 
 const checkIsOptional = (value: any, rules: string[]): boolean => {
-    if (!rules.includes(PRESENCE_RULES.IF_EXISTS)) return false;
-
-    if (rules.includes(PRESENCE_RULES.REQUIRED) && typeof value === 'string' && value.trim() === '') return true;
-
-    return rules.includes(PRESENCE_RULES.IF_EXISTS) && (value !== null || value !== undefined);
+    return rules.includes(PRESENCE_RULES.IF_EXISTS);
 }
 
 const checkIfContainsExistenceConflict = (rules: string[]): boolean => {
