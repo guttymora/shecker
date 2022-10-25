@@ -1,4 +1,4 @@
-import { validate } from '../src/index';
+import { validate } from '../src';
 
 describe('Check validations for single values', () => {
     it('Should return one error because value type is wrong', () => {
