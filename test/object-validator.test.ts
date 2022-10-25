@@ -203,7 +203,7 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toStrictEqual([]);
     });
 
-    it.only('Should return no errors', () => {
+    it('Should return no errors', () => {
         const object = {
             name: 'Alex',
             childrenCount: 0
