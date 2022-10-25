@@ -203,6 +203,17 @@ describe('Check validations for simple objects', () => {
         expect(validateObject(object, rules)).toStrictEqual([]);
     });
 
+    it.only('Should return no errors', () => {
+        const object = {
+            name: 'Alex',
+            childrenCount: 0
+        }
+
+        const rules = { name: 'string|min:2', childrenCount: 'number|min:0' };
+
+        expect(validateObject(object, rules)).toStrictEqual([]);
+    });
+
     it('Should return empty array because attribute `name` is optional (ifExists)', () => {
         const object = {
             id: 1,
