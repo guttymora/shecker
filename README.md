@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/shecker.svg)](https://badge.fury.io/js/shecker)
 
-Library for Typesscript and Javascript to validate single values, simple objects & complex objects according a set of defined rules.
+Library for Typescript and Javascript to validate single values, simple objects & complex objects according a set of defined rules.
 It's highly inspired by Laravel framework Validations: https://laravel.com/docs/9.x/validation
 > :warning: This library is still in experimental stage. Be careful while using it.
 
@@ -98,6 +98,7 @@ Name | Description
 Name | Description
 -----|------------
 `required` | Specifies the value needs to exist
+`ifExists` | If the value exists, apply the further rules
 `string` | The value has to be a String
 `email` | The value has to be a valid email format
 `number` | The value has to be a Number
