@@ -156,4 +156,16 @@ describe('Check validations for single values', () => {
 
         expect(errors).toStrictEqual([]);
     });
+
+    it('Should return no error because is a valid number', () => {
+        const errors = validate(0, 'required|number|min:0');
+
+        expect(errors).toStrictEqual([]);
+    });
+
+    it('Should return no error because is a valid number', () => {
+        const errors = validate(0, 'required|number|max:0');
+
+        expect(errors).toStrictEqual([]);
+    });
 });

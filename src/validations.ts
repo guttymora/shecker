@@ -102,7 +102,7 @@ const checkDateFormat = (value: any, rule: string): string | null => {
 
 const checkMin = (value: string | number | any[], rule: string): string | null => {
     const min = getNumberLimit(rule);
-    if (!min) return `Invalid limit -> ${rule}`;
+    if (min === undefined || min === null) return `Invalid limit -> ${rule}`;
 
     if (typeof value === 'number') {
         if (value >= min) return null;
@@ -110,18 +110,14 @@ const checkMin = (value: string | number | any[], rule: string): string | null =
         return `Invalid size -> ${rule}}`;
     }
 
-    if (typeof value === 'string' || value instanceof Array) {
-        if (value.length >= min) return null;
+    if (value.length >= min) return null;
 
-        return `Invalid size -> ${rule}}`;
-    }
-
-    return 'Invalid value type';
+    return `Invalid size -> ${rule}}`;
 }
 
 const checkMax = (value: string | number | any[], rule: string): string | null => {
     const max = getNumberLimit(rule);
-    if (!max) return `Invalid limit -> ${rule}`;
+    if (max === undefined || max === null) return `Invalid limit -> ${rule}`;
 
     if (typeof value === 'number') {
         if (value <= max) return null;
